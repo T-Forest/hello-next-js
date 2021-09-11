@@ -8,7 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@octokit/core": "^3.5.1",
+    "i": "^0.3.6",
     "next": "10.x",
+    "npm": "^7.23.0",
     "react": "17.x",
     "react-dom": "17.x"
   },
