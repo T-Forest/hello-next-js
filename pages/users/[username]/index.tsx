@@ -5,18 +5,19 @@ import { octokit } from "../../../src/utils/fetcher";
 import { useRouter } from "next/router";
 import Error from "../../_error";
 
-/** 動的ルート有効 */
+/** getStaticPaths: 動的ルートページの事前ビルド設定を定義する */
 export const getStaticPaths = async () => {
   return {
-    // ビルド時に静的生成を行わない
+    // 事前ビルドする動的ルートPATHを定義する
     paths: [],
     // 段階的静的生成(ISG / ISR)
     fallback: true,
   };
 };
 
-/** 初期表示時 */
+/** getStaticProps: ビルド時に静的生成を行う際のAPI */
 export const getStaticProps = async (context: GetStaticPropsContext) => {
+  // pathsを表す変数名は、ファイル名に対応 ここではparam.username
   const username = context.params?.username;
   // パラメータチェック
   if (typeof username !== "string") {
@@ -62,7 +63,7 @@ export default function Page({ user, repos, err, generatedAt }: PageProps) {
         <div>Loading!</div>
       </>
     );
-  }  
+  }
   return (
     <>
       <div>user name: {user?.data?.login}</div>
@@ -113,6 +114,7 @@ const propsFactory = (injects?: Partial<StaticProps>) => ({
     generatedAt: now(),
     ...injects,
   },
+  // ISGでなくISR(10s経過後、再生成される)
   revalidate: 10,
 });
 
