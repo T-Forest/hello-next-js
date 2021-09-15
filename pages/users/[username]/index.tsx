@@ -10,7 +10,8 @@ export const getStaticPaths = async () => {
   return {
     // 事前ビルドする動的ルートPATHを定義する
     paths: [],
-    // 段階的静的生成(ISG / ISR)
+    // 段階的静的生成(ISG / ISR) 
+    // true: ビルド時に生成していないページヘのアクセス時、getStaticPropsが実行され、静的ファイルを生成する
     fallback: true,
   };
 };
